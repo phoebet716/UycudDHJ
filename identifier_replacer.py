@@ -5,7 +5,6 @@ from __future__ import annotations
 import ast
 import re
 import sys
-from typing import ClassVar
 
 
 class IdentifierReplacer(ast.NodeTransformer):
@@ -17,8 +16,6 @@ class IdentifierReplacer(ast.NodeTransformer):
         def foo(bar):
             return baz
 
-        IdentifierReplacer({"foo": "x", "bar": "y", "baz": "z"}) will modify the AST of
-        the function above to below:
 
         def x(y):
             return z
@@ -65,8 +62,7 @@ class IdentifierReplacer(ast.NodeTransformer):
                 posonlyargs=self._replace_args(node.args.posonlyargs),  # from 3.8
                 args=self._replace_args(node.args.args),
                 kwonlyargs=self._replace_args(node.args.kwonlyargs),
-                kw_defaults=self._visit_children(node.args.kw_defaults),
-                defaults=self._visit_children(node.args.defaults),
+                kw_defaults=self._visit_children(node.args.kw_defaults)
             )
 
         return ast.FunctionDef(
